@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    env_file:
+      - ./docker/server/.env.postgres
+    environment:
+      TZ: "Africa/Casablanca"
+    restart: unless-stopped
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - server
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    env_file:
+      - ./docker/server/.env.pgadmin
+    environment:
+      TZ: "Africa/Casablanca"
+    logging:
+      driver: none
+    volumes:
+      - ./docker/server/pgadmin.json:/pgadmin4/servers.json
+    ports:
+      - 5050:80
+    networks:
+      - server
+    depends_on:
+      - postgres
+
+  server:
+    container_name: server
+    image: server:1337
+    build:
+      context: ./docker/server
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - server
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./docker/server/.env.local
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  client:
+    container_name: client
+    image: client:1337
+    build:
+      context: ./docker/client
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - server
+    volumes:
+      - ./client:/app
+    env_file:
+      - ./docker/client/.env.local
+    restart: unless-stopped
+    depends_on:
+      - server
+
+volumes:
+  data:
+
+networks:
+  server:

@@ -1,8 +1,4 @@
-all		:	start
-
-.PHONY	:	start
-start	:
-			sh ./scripts/start.sh
+all		:	run
 
 .PHONY	:	run
 run		:
@@ -10,4 +6,11 @@ run		:
 
 .PHONY	:	clean
 clean	:
-			sh ./scripts/clean.sh
+			sh ./scripts/clean.sh bdd
+
+.PHONY	:	fclean
+fclean	:
+			sh ./scripts/clean.sh all
+
+.PHONY	:	re
+re		:	fclean all
