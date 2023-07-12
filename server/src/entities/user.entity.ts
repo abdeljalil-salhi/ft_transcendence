@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+import { Avatar } from './avatar.entity';
 import { Status } from 'src/other/enums/status.enum';
 
 @Entity()
@@ -12,6 +13,9 @@ export class User {
 
   @Column('boolean', { default: false })
   isAdmin: boolean;
+
+  @OneToOne(() => Avatar, (avatar) => avatar.user)
+  avatar: Avatar;
 
   @Column('boolean', { default: false })
   profileCompleted: boolean;
