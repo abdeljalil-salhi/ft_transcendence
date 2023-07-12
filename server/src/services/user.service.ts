@@ -43,4 +43,18 @@ export class UserService {
       throw new HttpException('User has no avatar', HttpStatus.NOT_FOUND);
     return user.avatar;
   }
+
+  async updateUserAvatar(
+    userId: number,
+    avatar: Express.Multer.File
+  ): Promise<void> {
+    if (!avatar)
+      throw new HttpException('Avatar required', HttpStatus.NOT_ACCEPTABLE);
+    const filename = avatar.originalname;
+    const buffer = avatar.buffer;
+    const user: User = await this.getUser(userId, ['avatar']);
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    await this.avatarService.createAvatar(filename, buffer, user);
+    if (user.avatar) await this.avatarService.deleteAvatar(user.avatar.id);
+  }
 }
