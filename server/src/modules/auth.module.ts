@@ -9,11 +9,11 @@ import { Intra42Strategy } from 'src/other/strategies/intra42.strategy';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '7d' },
     }),
+    PassportModule,
   ],
   controllers: [AuthController],
   providers: [JWTStrategy, Intra42Strategy, AuthService],

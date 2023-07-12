@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.1",
     "@nestjs/typeorm": "^10.0.0",
+    "2fa-util": "^1.2.0",
     "joi": "^17.9.2",
     "passport-42": "^1.2.6",
     "passport-jwt": "^4.0.1",

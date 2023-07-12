@@ -1,8 +1,8 @@
 export interface IJWTStrategyValidate {
-  userId: string;
+  userId: number;
 }
 
 export interface IJWTStrategyPayload {
-  sub: string;
+  sub: number;
   otp: boolean;
 }
