@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
+import { AppController } from '../app.controller';
+import { AppService } from 'src/services/app.service';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -16,7 +17,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Server up and running..."', () => {
-      expect(appController.getPinged()).toBe('Server up and running...');
+      expect(appController.getPing()).toBe('Server up and running...');
     });
   });
 });
